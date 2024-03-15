@@ -1,0 +1,5 @@
+package com.mtit.osgi.hotelroombooking;
+
+public class ServicePublishImpl {
+
+}

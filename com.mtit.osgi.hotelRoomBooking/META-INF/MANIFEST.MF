@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: HotelRoomBooking
+Bundle-SymbolicName: com.mtit.osgi.hotelRoomBooking
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: com.mtit.osgi.hotelroombooking.ServiceActivator
+Bundle-Vendor: MTIT
+Bundle-RequiredExecutionEnvironment: JavaSE-16
+Automatic-Module-Name: com.mtit.osgi.hotelRoomBooking
+Import-Package: org.osgi.framework;version="1.3.0"
+Bundle-ActivationPolicy: lazy
+Export-Package: com.mtit.osgi.hotelroombooking

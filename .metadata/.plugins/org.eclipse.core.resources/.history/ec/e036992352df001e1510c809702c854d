@@ -1,0 +1,7 @@
+package com.mtit.osgi.hotelroombooking;
+
+public interface ServicePublish {
+	public String publisherService();
+	public String LoginVerification(String username,String password);
+
+}

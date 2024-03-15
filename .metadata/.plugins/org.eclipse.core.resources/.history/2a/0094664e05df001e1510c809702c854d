@@ -1,0 +1,10 @@
+package com.mtit.osgi.hotelroombooking;
+
+public class ServicePublishImpl implements ServicePublish{
+
+	@Override
+	public String publisherService() {
+		return "Execute the publish service of ServicePublisher";
+	}
+
+}

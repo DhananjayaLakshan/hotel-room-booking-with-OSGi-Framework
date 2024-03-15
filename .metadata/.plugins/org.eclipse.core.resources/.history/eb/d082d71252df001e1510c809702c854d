@@ -1,0 +1,30 @@
+package com.mtit.osgi.hotelroombooking;
+
+import java.util.*;
+
+public class ServicePublishImpl implements ServicePublish{
+
+	@Override
+	public String publisherService() {
+		return "Execute the publish service of ServicePublisher";
+	}
+
+	@Override
+	public String LoginVerification(String username, String password) {
+		
+		if((username.equals("admin")) && (password.equals("123")))
+    	{
+			return "admin";
+		}
+		else if((username.equals("cashier")) && (password.equals("789")))
+		{
+			return "cashier";
+		}else
+		{
+			return "invalid";
+		}	
+	}
+
+	
+
+}

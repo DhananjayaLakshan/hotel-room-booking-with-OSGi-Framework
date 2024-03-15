@@ -1,0 +1,8 @@
+package com.mtit.osgi.hotelroombooking;
+
+public interface ServicePublish {
+	public String publisherService();
+	public String LoginVerification(String username,String password);
+	public void add_AC_nonAC_Room(String roomType, ArrayList available_AC_Rooms, ArrayList available_nonAC_Rooms, int roomsNumber);
+
+}

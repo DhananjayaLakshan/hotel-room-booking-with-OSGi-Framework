@@ -1,0 +1,6 @@
+package com.mtit.osgi.hotelroombooking;
+
+public interface ServicePublish {
+	public String publisherService();
+
+}

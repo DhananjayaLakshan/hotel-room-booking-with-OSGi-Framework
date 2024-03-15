@@ -1,0 +1,208 @@
+package servicesubscriber;
+
+import java.util.*;
+import java.util.ArrayList;
+
+import org.osgi.framework.BundleActivator;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
+
+import com.mtit.osgi.hotelroombooking.ServicePublish;
+import com.mtit.osgi.hotelroombooking.ServicePublishImpl;
+
+public class ServiceActivator implements BundleActivator {
+
+	ServiceReference serviceReference;
+		
+	public void start(BundleContext context) throws Exception {
+		System.out.println("Room Consumer Service start successfully");
+		serviceReference = context.getServiceReference(ServicePublish.class.getName());
+		ServicePublish servicePublish = (ServicePublish) context.getService(serviceReference);
+		
+		System.out.println();
+		System.out.println("Room Consumer Service start successfully");
+				
+		try {
+			
+			String username,password,choice, roomType = null, roomChoice;
+			int roomNumber = 0;
+			
+			ArrayList<Integer> available_AC_Rooms = new ArrayList<Integer>();
+			ArrayList<Integer> available_nonAC_Rooms = new ArrayList<Integer>();
+			ArrayList<Integer> booked_Rooms = new ArrayList<Integer>();
+			
+			available_AC_Rooms.add(1);
+			available_AC_Rooms.add(2);
+			available_AC_Rooms.add(3);
+			available_AC_Rooms.add(4);
+			available_AC_Rooms.add(5);
+			
+			available_nonAC_Rooms.add(1);
+			available_nonAC_Rooms.add(2);
+			available_nonAC_Rooms.add(3);
+			available_nonAC_Rooms.add(4);
+			available_nonAC_Rooms.add(5);
+			
+			System.out.println("Available A/C Rooms:"+available_AC_Rooms);
+			System.out.println("Available NON A/C Rooms:"+available_nonAC_Rooms);
+			
+			Scanner scan = new Scanner(System.in);
+			ServicePublish roomservice = new ServicePublishImpl();
+			
+			while(true) {
+				
+				 	System.out.println("====== Login =========================");
+				 	System.out.println();
+					System.out.print("Enter UserName : ");
+					username = scan.next();
+				
+					
+					if(username.equals("end"))
+					{
+						System.out.println("Ending The service ");
+						break;
+					}
+					
+
+					System.out.print("Enter Password : ");
+					password = scan.next();
+					System.out.println();
+					System.out.println("======================================\n");
+					
+					choice = roomservice.LoginVerification(username, password);
+					
+					if(choice=="admin")
+					{
+						System.out.println("~~~~~~~~~~~ Welcome Admin ~~~~~~~~~~~");
+						System.out.println("Available A/C Rooms:"+available_AC_Rooms);
+						System.out.println("Available NON A/C Rooms:"+available_nonAC_Rooms);
+						
+						System.out.print("If you want add room type (add) ||  remove room (remove) || logout type (end):");
+						roomChoice = scan.next();
+						
+						if (roomChoice.equals("add") || roomChoice.equals("ADD")) {
+							System.out.print("Enter Room Type (AC / NONAC): ");
+							roomType = scan.next();
+							
+							System.out.print("Enter Room Number: ");
+							roomNumber = scan.nextInt();
+							
+							roomservice.add_AC_nonAC_Room(roomType, available_AC_Rooms, available_nonAC_Rooms, roomNumber);	
+							
+						}else if (roomChoice.equals("remove") || roomChoice.equals("REMOVE")) {
+							System.out.print("Enter Remove Room Type (AC / nonAC): ");
+							roomType = scan.next();
+							
+							System.out.print("Enter Remove Room Number: ");
+							roomNumber = scan.nextInt();
+							
+							roomservice.Remove_Ac_NonAc_Room(roomType, available_AC_Rooms, available_nonAC_Rooms, roomNumber);
+							
+						}else {
+							System.out.println("Wrong entry..!!!!");
+						}
+						
+						
+					}else if(choice=="cashier") {
+						
+						System.out.println("~~~~~~~~~~~ Welcome Cashier ~~~~~~~~~~~");
+						System.out.println();
+				    	System.out.println("A/C Room Charge: Rs 2000/=");
+						System.out.println("NON A/C Room Charge: Rs 1500/=");		    	
+						System.out.println();
+						
+						System.out.println("Available A/C Rooms:"+ available_AC_Rooms);
+						System.out.println("Available NON A/C Rooms:"+ available_nonAC_Rooms);
+						System.out.println();
+						
+						 System.out.print("Enter Room Service Type(BOOK or RELEASE):");
+						 String book_release_rooms = scan.next();
+						 
+						 if((book_release_rooms.equals("BOOK") || book_release_rooms.equals("book")) )
+				         { 
+					          System.out.print("Enter Room Type(AC or NONAC):");
+					          roomType = scan.next();
+					
+					         System.out.print("Enter No Of Rooms:");
+					         roomNumber = scan.nextInt();
+				         }else {
+								System.out.println("Wrong entry..!!!!");
+						}
+						 
+						 
+						 if(roomType.length() == 0 || book_release_rooms.length() == 0)
+						 {
+							 break;
+						 }	 						 
+						 else if(roomservice == null)
+						 {
+							 System.out.println("No Service Available");
+						 }	
+						 else if((book_release_rooms.equals("BOOK") || book_release_rooms.equals("book")) )
+						 {
+							 if(roomType.equals("AC") || roomType.equals("ac"))
+							 { 
+								 roomservice.Book_AC_Room(roomNumber, available_AC_Rooms, available_nonAC_Rooms, booked_Rooms);
+							 
+							 }
+							 else if(roomType.equals("NONAC") || roomType.equals("nonac"))
+							 {
+								 roomservice.Book_NON_AC_Room(roomNumber, available_nonAC_Rooms, available_AC_Rooms, booked_Rooms);
+							 }
+							 else
+							 {
+								 System.out.println("Room Type is not  Available");
+							 }	
+						 } 
+						 else if((book_release_rooms.equals("RELEASE") || book_release_rooms.equals("release")))
+						 {
+							 
+							 System.out.print("Enter Release Room Type [AC || NONAC]:");
+							 roomType = scan.next();
+							 
+							 if(roomType.equals("AC") || roomType.equals("ac"))
+							 { 
+								 System.out.print("Enter Release Room Number:");
+								 roomNumber = scan.nextInt();
+								 
+								 roomservice.Release_AC_Room(roomNumber, available_AC_Rooms, available_nonAC_Rooms, booked_Rooms);
+							 
+							 }
+							 
+							 else if(roomType.equals("NONAC") || roomType.equals("nonac"))
+							 { 
+								 System.out.print("Enter Release Room Number:");
+								 roomNumber = scan.nextInt();
+								 
+								 roomservice.Release_NONAC_Room(roomNumber, available_AC_Rooms, available_nonAC_Rooms, booked_Rooms);
+							 
+							 }
+							 else
+							 {
+								 System.out.println("Room Type is not  Available");
+							 }
+							 					    
+					 }
+					 else
+					 {
+						 System.out.println("Type is not available");
+						 
+					 }	
+						
+					}	
+					
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+	}
+	
+	public void stop(BundleContext context) throws Exception {
+		System.out.println("Rooms Consumer Service Stop Successfully.....!!!!");
+		context.ungetService(serviceReference);
+		
+	}
+
+}

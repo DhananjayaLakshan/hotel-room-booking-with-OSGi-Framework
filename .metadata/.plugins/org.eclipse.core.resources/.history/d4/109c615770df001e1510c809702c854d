@@ -1,0 +1,108 @@
+package com.mtit.osgi.hotelroombooking;
+
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class ServicePublishImpl implements ServicePublish{
+
+	@Override
+	public String publisherService() {
+		return "Execute the publish service of ServicePublisher";
+	}
+
+	@Override
+	public String LoginVerification(String username, String password) {
+		
+		if((username.equals("admin")) && (password.equals("123")))
+    	{
+			return "admin";
+		}
+		else if((username.equals("cashier")) && (password.equals("789")))
+		{
+			return "cashier";
+		}else
+		{
+			return "invalid";
+		}	
+	}
+
+	@Override
+	public void add_AC_nonAC_Room(String roomType, ArrayList available_AC_Rooms, ArrayList available_nonAC_Rooms,
+			int roomsNumber) {
+		
+		if(roomType.equals("AC") || roomType.equals("ac"))
+		{
+			available_AC_Rooms.add(roomsNumber);
+			 System.out.println("New  AC Room Added "+roomsNumber);  
+	       	  
+			
+			    Collections.sort(available_AC_Rooms);
+			    Collections.sort(available_nonAC_Rooms);
+			    System.out.println("Available AC Rooms:"+available_AC_Rooms);
+			    System.out.println("Available NON AC Rooms:"+available_nonAC_Rooms);
+			
+		}
+		 else if(roomType.equals("NONAC") || roomType.equals("nonac"))
+        {
+			 available_nonAC_Rooms.add(roomsNumber);
+       	   System.out.println("New NON AC Room Added"+roomsNumber);  
+       	  
+       	    Collections.sort(available_AC_Rooms);
+		    Collections.sort(available_nonAC_Rooms);
+		    System.out.println("Available AC Rooms:"+available_AC_Rooms);
+		    System.out.println("Available NON AC Rooms:"+available_nonAC_Rooms);
+        }	 
+	}
+
+	@Override
+	public void Remove_Ac_NonAc_Room(String RoomType, ArrayList available_AC_Rooms, ArrayList available_nonAC_Rooms,
+			int roomsNumber) {
+		
+		if(RoomType.equals("AC") || RoomType.equals("ac"))
+		{
+			for(int i=0;i<available_AC_Rooms.size();i++)
+			{
+				if(roomsNumber == (int)available_AC_Rooms.get(i))
+				{
+					available_AC_Rooms.remove(i);
+					 System.out.println("New AC Room Removed "+roomsNumber);  
+			       	  
+				    
+				    Collections.sort(available_AC_Rooms);
+				    Collections.sort(available_nonAC_Rooms);
+				    System.out.println("Available AC Rooms:"+available_AC_Rooms);
+				    System.out.println("Available NON AC Rooms:"+available_nonAC_Rooms);
+				}
+				
+			}
+		}else if(RoomType.equals("NONAC") || RoomType.equals("nonac"))
+        { 
+			 for(int i=0;i<available_nonAC_Rooms.size();i++)
+				{
+					if(roomsNumber == (int)available_nonAC_Rooms.get(i))
+					{
+						available_nonAC_Rooms.remove(i);
+						 System.out.println("NON AC Room Removed "+roomsNumber);  
+				       	  
+						
+						
+						Collections.sort(available_AC_Rooms);
+						Collections.sort(available_nonAC_Rooms);
+						System.out.println("Available AC Rooms:"+available_AC_Rooms);
+						System.out.println("Available NON AC Rooms:"+available_nonAC_Rooms);
+					}
+					
+				}
+       	  
+       	  
+        }	
+		
+		
+		
+	}
+
+	
+
+}

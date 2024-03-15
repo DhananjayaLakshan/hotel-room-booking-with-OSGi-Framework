@@ -1,0 +1,19 @@
+package com.mtit.osgi.hotelroombooking;
+
+import java.util.*;
+
+public class ServicePublishImpl implements ServicePublish{
+
+	@Override
+	public String publisherService() {
+		return "Execute the publish service of ServicePublisher";
+	}
+
+	@Override
+	public void hotelReservation() {
+		
+		Scanner
+		
+	}
+
+}
